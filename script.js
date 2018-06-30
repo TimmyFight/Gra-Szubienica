@@ -37,11 +37,34 @@ generateLetterButtons : function() {
     }.bind(this));
 },
 
+checkLettersInSentention : function(letter) {
+    if(this.currentSentence.indexOf(letter) !=-1)
+    for (let i=0; i<this.currentSentence.length; i++) {
+        if (this.currentSentence[i] === letter) {
+            this.elemSentence.querySelectorAll('game-sentence-box')[i].innerHTML = letter;
+        }
+    }
+
+    //usuwamy trafioną literę z currentSentenceLetters
+    this.currentSentenceLetters = this.currentSentenceLetters.replace(new RegExp(letter, 'g'), '');
+
+    if (!this.isLetterExists()) {
+        this.gameComplete();
+    }else { //nie ma takiej litery w haśle
+    this.attempts--;
+    this.showAttempts();
+
+    if (this.attempts <=0) {
+        this.gameOver();
+    }
+}
+},
+
 bindEvents : function() {
     this.elemLetters.addEventListener('click', function(e) {
         if(e.target.nodeName.toUpperCase() === "BUTTON" && e.target.classList.contains('game-letter')){
             const letter = e.target.dataset.letter;
-            console.log(letter); // tymczasowo wypiszmy literę w konsoli 
+            this.checkLettersInSentention(letter.toUpperCase());
             e.target.disabled = true;
         }
     }.bind(this));
