@@ -1,7 +1,7 @@
 const game = {
     currentSentence : null, //aktualne hasło 
     currentSentenceLetters : null, 
-    attempts : 5, //liczba prób
+    attempts : 10, //liczba prób
     elemBoardElem : document.querySelector('.game-board'), // element z całą grą 
     elemSentence : document.querySelector('.game-sentence'), // element z hasłem do zgadnięcia
     elemAttempts : document.querySelector('.game-attempts'), // element z liczbą prób
@@ -37,11 +37,25 @@ generateLetterButtons : function() {
     }.bind(this));
 },
 
+gameOver : function() {
+  alert("Nie udało Ci się odgadnąć hasła.\n\n Hasło to: " + this.currentSentence);  
+  this.disableLetters();
+},
+
+gameComplete : function () {
+    alert("Gratulacje, odgadłeś hasło!!!")
+    this.disableLetters();
+},
+  
+isLetterExists : function() {
+    return this.currentSentenceLetters.length;
+},
+
 checkLettersInSentention : function(letter) {
     if(this.currentSentence.indexOf(letter) !=-1)
     for (let i=0; i<this.currentSentence.length; i++) {
         if (this.currentSentence[i] === letter) {
-            this.elemSentence.querySelectorAll('game-sentence-box')[i].innerHTML = letter;
+            this.elemSentence.querySelectorAll('.game-sentence-box')[i].innerHTML = letter; 
         }
     }
 
@@ -112,7 +126,7 @@ randomSentence : function() {
 },
 
 startGame : function() { 
-    this.attempts = 5; 
+    this.attempts = 10; 
     this.randomSentence();
     this.showAttempts();
     this.enableLetters();
