@@ -52,7 +52,7 @@ isLetterExists : function() {
 },
 
 checkLettersInSentention : function(letter) {
-    if(this.currentSentence.indexOf(letter) !=-1)
+    if(this.currentSentence.indexOf(letter) !=-1) {
     for (let i=0; i<this.currentSentence.length; i++) {
         if (this.currentSentence[i] === letter) {
             this.elemSentence.querySelectorAll('.game-sentence-box')[i].innerHTML = letter; 
@@ -62,8 +62,9 @@ checkLettersInSentention : function(letter) {
     //usuwamy trafioną literę z currentSentenceLetters
     this.currentSentenceLetters = this.currentSentenceLetters.replace(new RegExp(letter, 'g'), '');
 
-    if (!this.isLetterExists()) {
-        this.gameComplete();
+        if (!this.isLetterExists()) {
+            this.gameComplete();
+        }
     }else { //nie ma takiej litery w haśle
     this.attempts--;
     this.showAttempts();
